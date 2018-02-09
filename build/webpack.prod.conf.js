@@ -10,6 +10,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+var QiniuPlugin = require('qiniu-webpack-plugin')// 七牛插件 JockLee<webees@qq.com> 201708160245
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -25,6 +26,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
+    publicPath: env.QN_PATH, //资源路径,根据需要可改为cdn地址 七牛云
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
@@ -37,7 +39,9 @@ const webpackConfig = merge(baseWebpackConfig, {
     new UglifyJsPlugin({
       uglifyOptions: {
         compress: {
-          warnings: false
+          warnings: false,
+          drop_debugger: true,
+          drop_console: true
         }
       },
       sourceMap: config.build.productionSourceMap,
@@ -48,7 +52,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: utils.assetsPath('css/[name].[contenthash].css'),
       // Setting the following option to `false` will not extract CSS from codesplit chunks.
       // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
-      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`, 
+      // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`,
       // increasing file size: https://github.com/vuejs-templates/webpack/issues/1110
       allChunks: true,
     }),
@@ -119,7 +123,21 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    new QiniuPlugin({
+      // 七牛插件配置 JockLee<webees@qq.com> 201708160245
+      ACCESS_KEY: env.QN_ACCESS_KEY,
+      SECRET_KEY: env.QN_SECRET_KEY,
+      bucket: env.QN_BUCKET,
+      path: '',
+      include: [
+        // 这里很重要，避免上传html JockLee<webees@qq.com> 201708160245
+        /.*\.(js|css|eot|woff|svg|ttf)$/,
+        /.*\.(eot|woff|svg|ttf)$/,
+        /.*\.(png|jpg|gif)$/,
+        /.*\.(mp3|wav)$/
+      ]
+    })
   ]
 })
 

@@ -1,0 +1,47 @@
+body {
+  min-width: 666px;
+  user-select: none;
+}
+
+::-webkit-selection {
+  background:#d3d3d3;
+  color:#555;
+}
+
+/*滚动条垂直方向的宽度*/
+::-webkit-scrollbar {
+	width: 5px;
+}
+/* 垂直滚动条的滑动块 */
+::-webkit-scrollbar-thumb:vertical {
+	// box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background:rgba(45, 140, 240, 0.5);
+  border: 1px solid #fff;
+}
+
+img[src=""], //图片错误处理
+img:not([src]) {
+  opacity: 0;
+}
+
+a {
+  color: $text-color;
+  transition: all .2s linear;
+  &:hover {
+    color: $text-hover-color;
+  }
+  &:active {
+    color: #c89b3c;
+  }
+  &.active {
+    color: #eee4d2;
+  }
+}
+
+.drag {
+  -webkit-app-region: drag;
+}
+
+.no_drag {
+  -webkit-app-region: no-drag;
+}
