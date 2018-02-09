@@ -8,10 +8,12 @@ let d = {}
 d.playerData = {
   params: {
     current: null,
-    size: null
+    size: null,
+    key: null,
+    sort: -1
   },
   get () {
-    let path = `pubu_user/gamer?p=${this.params.current}&s=${this.params.size}`
+    let path = `gamer?p=${this.params.current}&s=${this.params.size}&key=${this.params.key}&sort=${this.params.sort}`
     return api.axios('GET', path)
   }
 }
@@ -21,20 +23,8 @@ d.searchData = {
     id: null
   },
   get () {
-    let path = ``
-    return api.api('GET', path)
-  }
-}
-
-d.sortData = {
-  params: {
-    sort: null,
-    key: null,
-    current: null
-  },
-  get () {
-    let path = ``
-    return api.api('GET', path)
+    let path = `gamer?id=${this.params.id}`
+    return api.axios('GET', path)
   }
 }
 

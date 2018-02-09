@@ -61,18 +61,20 @@ export default {
             let params = this.d_page
             params.type = value // 筛选类型
             this.$store.actions('playerCharge/filterData', params) // 获取筛选的数据
-            // if (value === 1) {
-            //   return row.type === '充值'
-            //   let params = this.d_page
-            //   params.type = value // 筛选类型
-            //   this.$store.actions('playerCharge/upData', this.d_page)
-            // } else if (value === 2) {
-            //   return row.type === '转账'
-            //   this.$store.actions('playerCharge/upData', this.d_page)
-            // } else if (value === 3) {
-            //   return row.type === '消费'
-            //   this.$store.actions('playerCharge/upData', this.d_page)
-            // }
+            /*
+            if (value === 1) {
+              return row.type === '充值'
+              let params = this.d_page
+              params.type = value // 筛选类型
+              this.$store.actions('playerCharge/upData', this.d_page)
+            } else if (value === 2) {
+              return row.type === '转账'
+              this.$store.actions('playerCharge/upData', this.d_page)
+            } else if (value === 3) {
+              return row.type === '消费'
+              this.$store.actions('playerCharge/upData', this.d_page)
+            }
+            */
           }
         }
       ]

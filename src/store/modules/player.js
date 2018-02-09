@@ -48,38 +48,26 @@ const actions = {
   upData ({
     state,
     commit
-  }, _page) {
-    let tmp = apiPlayer.playerData.params
-    tmp.current = _page.current
-    tmp.size = _page.size
-    apiPlayer.playerData.get().then((_response) => {
-      if (_response.data.status === 'ok') {
-        // commit('data', _response.data.data)
-      }
-    })
-  },
-  upsearchData ({
-    state,
-    commit
   }, _params) {
-    let tmp = apiPlayer.searchData.data
-    tmp.id = _params
-    apiPlayer.searchData.get().then((_response) => {
-      if (_response.data.status === 'ok') {
+    let tmp = apiPlayer.playerData.params
+    tmp.current = _params.current
+    tmp.size = _params.size
+    tmp.key = _params.key
+    tmp.sort = _params.sort
+    apiPlayer.playerData.get().then((_response) => {
+      if (_response.data.code === 1) {
         commit('data', _response.data.data)
       }
     })
   },
-  sortData ({
+  searchData ({
     state,
     commit
   }, _params) {
-    let tmp = apiPlayer.sortData.params
-    tmp.sort = _params.sort
-    tmp.key = _params.key
-    tmp.current = _params.current
-    apiPlayer.sortData.get().then((_response) => {
-      if (_response.data.status === 'ok') {
+    let tmp = apiPlayer.searchData.params
+    tmp.id = _params
+    apiPlayer.searchData.get().then((_response) => {
+      if (_response.data.code === 1) {
         commit('data', _response.data.data)
       }
     })

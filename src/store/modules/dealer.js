@@ -35,26 +35,13 @@ const actions = {
   upData ({
     state,
     commit
-  }, _page) {
-    let tmp = apiDealer.dealerData.data
-    tmp.current = _page.current
-    tmp.size = _page.size
-    tmp.total = _page.total
-    apiDealer.dealerData.get().then((_response) => {
-      if (_response.data.status === 'ok') {
-        commit('data', _response.data.data)
-      }
-    })
-  },
-  sortData ({
-    state,
-    commit
   }, _params) {
-    let tmp = apiDealer.sortData.params
-    tmp.sort = _params.sort
-    tmp.key = _params.key
+    let tmp = apiDealer.dealerData.params
     tmp.current = _params.current
-    apiDealer.sortData.get().then((_response) => {
+    tmp.size = _params.size
+    tmp.key = _params.key
+    tmp.sort = _params.sort
+    apiDealer.dealerData.get().then((_response) => {
       if (_response.data.status === 'ok') {
         commit('data', _response.data.data)
       }

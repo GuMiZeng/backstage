@@ -13,6 +13,7 @@
 import expandRow from './_details'
 import gameLog from './_game_log'
 import chargeLog from './_charge_log'
+import { stamp2local } from '../../libs/function'
 export default {
   components: {
     expandRow,
@@ -21,6 +22,10 @@ export default {
   },
   data () {
     return {
+      d_sort: {
+        key: 'balance',
+        sort: -1
+      },
       d_search: null,
       d_page: {
         current: 1,
@@ -41,29 +46,33 @@ export default {
         },
         {
           title: '玩家ID',
-          key: 'ID'
+          key: 'account_num'
         },
         {
           title: '渠道ID',
-          key: 'dealerID'
+          key: 'f_uid'
         },
         {
           title: '注册时间',
-          key: 'create_at',
+          key: 'created_at',
           sortable: 'custom',
-          width: 110
+          render: (h, params) => {
+            return stamp2local(params.row.created_at / 1000)
+          }
         },
         {
           title: '最近活跃时间',
-          key: 'trade',
-          width: 110
+          key: 'recent_login',
+          render: (h, params) => {
+            return stamp2local(params.row.created_at / 1000)
+          }
         },
         {
           title: '游戏场次<胜利/总数>',
-          key: 'all_game',
+          key: 'game_total_num',
           width: 200,
           render: (h, params) => {
-            if (params.row.all_game) return '— —'
+            if (!params.row.game_total_num) return '— —'
             /**
              * 游戏记录显示操作
              * return h('div', [
@@ -117,7 +126,6 @@ export default {
       return this.$store.state('player/data')
     },
     c_loading () {
-    //   return this.c_data ? false : true
       return this.c_data === 0
     }
   },
@@ -132,22 +140,24 @@ export default {
       this.d_page.size = size
       this.getData()
     },
-    sort (_value) {
-      let params = {
-        sort: _value.order,
-        key: _value.key,
-        current: this.d_page.current
-      }
-      this.$store.actions('player/sortData', params) // 请求排序后的数据
-      this.d_page.total = this.c_data.length
-    },
     handleSearch () {
       this.$store.actions('player/searchData', this.d_search)
       this.d_page.total = this.c_data.length
     },
+    sort (_value) {
+      if (_value.order === 'desc') this.d_sort.sort = -1
+      if (_value.order === 'asc') this.d_sort.sort = 1
+      this.d_sort.key = _value.key
+      this.getData()
+    },
     getData () {
-      console.log(this.$store.state('user/jwt'))
-      this.$store.actions('player/upData', this.d_page)
+      let params = {
+        current: this.d_page.current,
+        size: this.d_page.size,
+        sort: this.d_sort.sort,
+        key: this.d_sort.key
+      }
+      this.$store.actions('player/upData', params)
       this.d_page.total = this.c_data.length
     }
   },

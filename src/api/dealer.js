@@ -6,25 +6,15 @@ let d = {}
  * 查询渠道商
  */
 d.dealerData = {
-  data: {
-    current: null,
-    size: null
-
-  },
-  get () {
-    let path = `/v1/account/accounts`
-    return api.axios('GET', path)
-  }
-}
-
-d.sortData = {
   params: {
-    sort: null,
+    current: null,
+    size: null,
     key: null,
-    current: null
+    sort: -1
+
   },
   get () {
-    let path = `/v1/account/accounts?sort=${this.params.sort}/key=${this.params.key}/current=${this.params.current}`
+    let path = `channel?p=${this.params.current}&s=${this.params.size}&key=${this.params.key}&sort=${this.params.sort}`
     return api.axios('GET', path)
   }
 }
