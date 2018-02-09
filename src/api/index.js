@@ -1,7 +1,5 @@
 import Axios from 'axios'
-import store from '../store'
-import moduel from '../store/modules'
-console.log(store, moduel)
+import localUser from '../local/user'
 let d = {}
 
 /**
@@ -11,8 +9,8 @@ let d = {}
 d.config = {
   baseURL: 'http://api.pubu.me:7001/api/',
   headers: {
+    'jwt': localUser.jwt(),
     'Content-Type': 'application/json'
-    // 'jwt': store.state('user/jwt')
   }
 }
 

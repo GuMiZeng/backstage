@@ -89,7 +89,6 @@ export default {
     handleSubmit () {
       this.$refs.d_form.validate((valid) => {
         if (valid) {
-          console.log(this.d_form)
           this.$store.actions('user/login', this.d_form)
         }
       })
