@@ -19,7 +19,8 @@ export default {
       d_page: {
         current: 1,
         total: 1,
-        size: 40
+        size: 40,
+        filter: 4
       },
       d_columns_charge: [
         {
@@ -56,25 +57,12 @@ export default {
               value: 3
             }
           ],
+          filter: 4,
           filterMultiple: false,
           filterMethod (value, row) {
-            let params = this.d_page
-            params.type = value // 筛选类型
-            this.$store.actions('playerCharge/filterData', params) // 获取筛选的数据
-            /*
-            if (value === 1) {
-              return row.type === '充值'
-              let params = this.d_page
-              params.type = value // 筛选类型
-              this.$store.actions('playerCharge/upData', this.d_page)
-            } else if (value === 2) {
-              return row.type === '转账'
-              this.$store.actions('playerCharge/upData', this.d_page)
-            } else if (value === 3) {
-              return row.type === '消费'
-              this.$store.actions('playerCharge/upData', this.d_page)
-            }
-            */
+            console.log(value)
+            this.filter = value
+            console.log(this.filter)
           }
         }
       ]
@@ -107,7 +95,10 @@ export default {
       this.getData()
     },
     getData () {
+      this.d_page.filter = this.d_columns_charge[3].filter
+      console.log(this.d_columns_charge[3].filter)
       this.$store.actions('playerCharge/upData', this.d_page)
+      this.d_page.total = this.c_chargeData.length
     }
   },
   created () {

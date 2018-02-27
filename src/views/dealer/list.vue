@@ -14,13 +14,13 @@ export default {
   data () {
     return {
       d_sort: {
-        key: 'balance',
+        key: 'invite_sum',
         sort: -1
       },
       d_search: null,
       d_page: {
         current: 1,
-        total: 1,
+        total: null,
         size: 40
       },
       d_columns: [
@@ -37,25 +37,25 @@ export default {
         },
         {
           title: '渠道ID',
-          key: 'ID'
+          key: 'account_num'
         },
         {
           title: '注册人数',
-          key: 'trade',
+          key: 'invite_sum',
           sortable: 'custom'
         },
         {
           title: '充值额度',
-          key: 'frozen',
+          key: 'recharge_amount',
           sortable: 'custom'
         },
         {
           title: 'Fid',
-          key: 'Fid'
+          key: 'f_uid'
         },
         {
           title: '名称',
-          key: 'name'
+          key: 'nickname'
         }
       ]
     }
@@ -87,7 +87,8 @@ export default {
       this.d_page.total = this.c_data.length
     },
     sort (_value) {
-      this.d_sort.sort = _value.order
+      if (_value.order === 'desc') this.d_sort.sort = -1
+      if (_value.order === 'asc') this.d_sort.sort = 1
       this.d_sort.key = _value.key
       this.getData()
     },

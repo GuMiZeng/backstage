@@ -1,12 +1,13 @@
 import Vuex from 'vuex'
 import modules from './modules'
+
 let d = {}
 let store = new Vuex.Store({
   modules,
   strict: process.env.NODE_ENV !== 'production'
 })
 
-d.state = function (_type, _payload) {
+d.state = (_type, _payload) => {
   let _path = _type.split('/')
   let _namespace = _path[0]
   let _stateName = _path[1]
@@ -16,7 +17,7 @@ d.state = function (_type, _payload) {
   return store.state[_namespace][_stateName]
 }
 
-d.actions = function (_type, _payload) {
+d.actions = (_type, _payload) => {
   return store.dispatch(_type, _payload)
 }
 

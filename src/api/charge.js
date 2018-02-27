@@ -7,25 +7,12 @@ let d = {}
  */
 d.chargeData = {
   params: {
+    type: null,
     current: null,
-    size: null,
-    total: null
+    size: null
   },
   get () {
-    let path = '/v1/account/accounts'
-    return api.axios('GET', path)
-  }
-}
-
-d.filterData = {
-  params: {
-    current: null,
-    size: null,
-    total: null,
-    type: null
-  },
-  get () {
-    let path = '/v1/account/accounts'
+    let path = `wallet_log/${this.params.type}/${this.params.current}/${this.params.size}`
     return api.axios('GET', path)
   }
 }

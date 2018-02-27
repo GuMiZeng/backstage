@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import localUser from '../local/user'
 export default {
   components: {
 
@@ -52,6 +53,8 @@ export default {
     },
     signOut () {
       // 清除jwt
+      this.$store.state('user/jwt', 0)
+      localUser.jwt(0)
       console.log('点击退出了')
       this.$router.push({ path: '/login' })
     }

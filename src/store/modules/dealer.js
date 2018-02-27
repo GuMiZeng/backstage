@@ -21,9 +21,6 @@ const getters = {
 const mutations = {
   data (state, newVal) {
     state.data = newVal
-  },
-  dealerList (state, newVal) {
-    state.dealerList = newVal
   }
 }
 
@@ -42,7 +39,7 @@ const actions = {
     tmp.key = _params.key
     tmp.sort = _params.sort
     apiDealer.dealerData.get().then((_response) => {
-      if (_response.data.status === 'ok') {
+      if (_response.data.code === 1) {
         commit('data', _response.data.data)
       }
     })
@@ -51,10 +48,10 @@ const actions = {
     state,
     commit
   }, _params) {
-    let tmp = apiDealer.searchData.data
+    let tmp = apiDealer.searchData.params
     tmp.id = _params
     apiDealer.searchData.get().then((_response) => {
-      if (_response.data.status === 'ok') {
+      if (_response.data.code === 1) {
         commit('data', _response.data.data)
       }
     })

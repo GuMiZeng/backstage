@@ -24,8 +24,9 @@ d.searchData = {
     id: null
   },
   get () {
-    let path = ``
-    return api.api('GET', path)
+    console.log(this.params.id)
+    let path = `channel?id=${this.params.id}`
+    return api.axios('GET', path)
   }
 }
 
