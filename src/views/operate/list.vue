@@ -9,19 +9,19 @@
         <i-form ref="d_form" :model="d_form" label-position="right" :label-width="80" :rules="d_form_check">
           <Form-item prop="remark" label="备注:">
             <div class="form_input">
-              <i-input ref="d_form.remark" v-model="d_form.pwd" @on-blur="inputFilter()" type="text" :maxlength="20" placeholder="备注">
+              <i-input ref="d_form.remark" v-model="d_form.remark" type="text" :maxlength="20" placeholder="备注">
               </i-input>
             </div>
           </Form-item>
           <Form-item prop="phone" label="手机号:">
             <div class="form_input">
-              <i-input> ref="d_form.phone" v-model="d_form.new_pwd" @on-blur="inputFilter()" type="text" :maxlength="11" placeholder="手机号">
+              <i-input ref="d_form.phone" v-model="d_form.phone" type="text" :maxlength="11" placeholder="手机号">
               </i-input>
             </div>
           </Form-item>
           <Form-item prop="pwd" label="密码:">
             <div class="form_input">
-              <i-input ref="d_form.pwd" v-model="d_form.sure_pwd" @on-blur="inputFilter()" type="password" :maxlength="14" placeholder="密码">
+              <i-input ref="d_form.pwd" v-model="d_form.pwd" type="password" :maxlength="14" placeholder="密码">
               </i-input>
             </div>
           </Form-item>
@@ -38,9 +38,9 @@ export default {
   data () {
     return {
       d_form: {
-        pwd: null,
-        new_pwd: null,
-        sure_pwd: null
+        remark: null,
+        phone: null,
+        pwd: null
       },
       d_form_check: {
         remark: [
@@ -51,9 +51,9 @@ export default {
               if (!value) {
                 return callback(new Error('备注不能为空'))
               }
-              // 长度必须为4
-              if (value.length < 6) {
-                return callback(new Error('输入6-14字符的密码'))
+              // 长度必须为 2
+              if (value.length < 2) {
+                return callback(new Error('输入2-20字符的备注'))
               }
               return callback()
             }
@@ -96,7 +96,7 @@ export default {
     handleSubmit () {
       this.$refs.d_form.validate((valid) => {
         if (valid) {
-          this.$store.actions('dealer/upData', this.d_form)
+          this.$store.actions('operate/addUser', this.d_form)
         } else {
           this._message('error', '输入错误')
         }

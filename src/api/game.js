@@ -8,11 +8,10 @@ let d = {}
 d.gameData = {
   params: {
     current: null,
-    size: null,
-    total: null
+    size: null
   },
   get () {
-    let path = '/v1/account/accounts'
+    let path = `gamer?p=${this.params.current}&s=${this.params.size}`
     return api.axios('GET', path)
   }
 }

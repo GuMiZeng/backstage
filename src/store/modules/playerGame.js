@@ -6,7 +6,8 @@ const state = {
       result: 0,
       time: null
     }
-  ] // 游戏数据
+  ], // 游戏数据
+  total: 0
 }
 
 const getters = {
@@ -16,6 +17,9 @@ const getters = {
 const mutations = {
   data (state, val) {
     state.gameData = val
+  },
+  total (state, val) {
+    state.total = val
   }
 }
 
@@ -33,8 +37,9 @@ const actions = {
     tmp.current = _page.current
     tmp.size = _page.size
     apiGame.gameData.get().then((_response) => {
-      if (_response.data.status === 'ok') {
+      if (_response.data.status === 1) {
         commit('data', _response.data.data)
+        commit('total', _response.data.data.length)
       }
     })
   }

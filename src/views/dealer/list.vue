@@ -4,7 +4,7 @@
     <br><br>
     <i-table :loading="c_loading" :columns="d_columns" :data="c_data" @on-sort-change="sort($event)"></i-table>
     <br><br>
-    <Page v-if="d_page.total > 0 " :current="d_page.current" :total="d_page.total" :page-size="d_page.size" @on-change="pageSwitch($event)" @on-page-size-change="pageSizeSwitch($event)" show-total show-elevator show-sizer></Page>
+    <Page v-if="c_total > 0 " :current="d_page.current" :total="c_total" :page-size="d_page.size" @on-change="pageSwitch($event)" @on-page-size-change="pageSizeSwitch($event)" show-total show-sizer></Page>
   </div>
 </template>
 <script>
@@ -64,6 +64,9 @@ export default {
     c_data () {
       return this.$store.state('dealer/data')
     },
+    c_total () {
+      return this.$store.state('dealer/total')
+    },
     c_page () {
       return this.$store.state('dealer/dealerList')
     },
@@ -83,8 +86,11 @@ export default {
       this.getData()
     },
     handleSearch () {
-      this.$store.actions('dealer/searchData', this.d_search)
-      this.d_page.total = this.c_data.length
+      if (!this.d_search) {
+        this.getData()
+      } else {
+        this.$store.actions('dealer/searchData', this.d_search)
+      }
     },
     sort (_value) {
       if (_value.order === 'desc') this.d_sort.sort = -1
@@ -100,7 +106,9 @@ export default {
         key: this.d_sort.key
       }
       this.$store.actions('dealer/upData', params)
-      this.d_page.total = this.c_data.length
+      // this.$nextTick(function () {
+      //   this.d_page.total = this.c_data.length
+      // })
     }
   },
   created () {

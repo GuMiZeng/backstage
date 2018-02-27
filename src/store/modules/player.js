@@ -17,7 +17,8 @@ const state = {
       all_game: 10,
       balance: 12
     }
-  ] // 玩家账户
+  ], // 玩家账户
+  total: 0
 }
 
 const getters = {
@@ -36,6 +37,9 @@ const mutations = {
   },
   data (state, val) {
     state.data = val
+  },
+  total (state, val) {
+    state.total = val
   }
 }
 
@@ -57,6 +61,7 @@ const actions = {
     apiPlayer.playerData.get().then((_response) => {
       if (_response.data.code === 1) {
         commit('data', _response.data.data)
+        commit('total', _response.data.data.length)
       }
     })
   },
@@ -69,6 +74,7 @@ const actions = {
     apiPlayer.searchData.get().then((_response) => {
       if (_response.data.code === 1) {
         commit('data', _response.data.data)
+        commit('total', _response.data.data.length)
       }
     })
   }

@@ -7,7 +7,8 @@ const state = {
       time: '2018-01-12',
       type: '充值'
     }
-  ] // 财务数据
+  ], // 财务数据
+  total: 0
 }
 
 const getters = {
@@ -17,6 +18,9 @@ const getters = {
 const mutations = {
   chargeData (state, val) {
     state.chargeData = val
+  },
+  total (state, val) {
+    state.total = val
   }
 }
 
@@ -35,8 +39,9 @@ const actions = {
     tmp.current = _param.current
     tmp.size = _param.size
     apiCharge.chargeData.get().then((_response) => {
-      if (_response.data.status === 'ok') {
+      if (_response.data.code === '1') {
         commit('chargeData', _response.data.data)
+        commit('total', _response.data.data.length)
       }
     })
   }

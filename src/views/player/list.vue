@@ -4,15 +4,15 @@
     <br><br>
     <i-table :loading="c_loading" :columns="d_columns" :data="c_data" @on-sort-change="sort($event)"></i-table>
     <br><br>
-    <Page v-if="d_page.total > 0 " :current="d_page.current" :total="d_page.total" :page-size="d_page.size" @on-change="pageSwitch($event)" @on-page-size-change="pageSizeSwitch($event)" show-total show-elevator show-sizer></Page>
-    <game-log v-if="$store.state('player/gameModal')"></game-log>
-    <charge-log v-if="$store.state('player/chargeModal')"></charge-log>
+    <Page v-if="c_total > 0 " :current="d_page.current" :total="c_total" :page-size="d_page.size" @on-change="pageSwitch($event)" @on-page-size-change="pageSizeSwitch($event)" show-total show-sizer></Page>
+    <game-log></game-log>
+    <charge-log></charge-log>
   </div>
 </template>
 <script>
 import expandRow from './_details'
-import gameLog from './_game_log'
-import chargeLog from './_charge_log'
+import gameLog from '../modal/game'
+import chargeLog from '../modal/charge'
 import { stamp2local } from '../../libs/function'
 export default {
   components: {
@@ -125,6 +125,9 @@ export default {
     c_data () {
       return this.$store.state('player/data')
     },
+    c_total () {
+      return this.$store.state('player/total')
+    },
     c_loading () {
       return this.c_data === 0
     }
@@ -141,8 +144,11 @@ export default {
       this.getData()
     },
     handleSearch () {
-      this.$store.actions('player/searchData', this.d_search)
-      this.d_page.total = this.c_data.length
+      if (!this.d_search) {
+        this.getData()
+      } else {
+        this.$store.actions('player/searchData', this.d_search)
+      }
     },
     sort (_value) {
       if (_value.order === 'desc') this.d_sort.sort = -1
@@ -158,7 +164,6 @@ export default {
         key: this.d_sort.key
       }
       this.$store.actions('player/upData', params)
-      this.d_page.total = this.c_data.length
     }
   },
   created () {

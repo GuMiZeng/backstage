@@ -2,9 +2,9 @@
   <div class="header drag">
     <i-menu mode="horizontal" @on-select="$router.push({ path: $event })" :active-name="`/${$route.path.split('/')[1]}`">
       <div class="logo no_drag">
-        <tooltip content="随意" placement="right">
+        <tooltip content="瀑布竞技" placement="right">
           <icon type="coffee" size="24"></icon>
-          <span>用户名</span>
+          <span v-text="$store.state('user/uid')"></span>
         </tooltip>
       </div>
       <div class="nav no_drag">
@@ -37,11 +37,15 @@ export default {
   },
   created () {
     // 权限控制运营页面显示
-    if (this.$store.state('user/uid') !== '1') {
+    if (!this.$store.state('user/isAdmin')) {
+      console.log('不是管理员')
+      console.log(this.$store.state('user/isAdmin'), this.$store.state('user/jwt'))
       let tmp = this.$store.state('appMenu/list')
       let m = tmp.slice(0)
-      m.splice(m.length - 1, 1)
-      this.$store.state('appMenu/list', m)
+      if (m.length >= 3) {
+        m.splice(m.length - 1, 1)
+        this.$store.state('appMenu/list', m)
+      }
     }
   },
   computed: {
@@ -55,7 +59,6 @@ export default {
       // 清除jwt
       this.$store.state('user/jwt', 0)
       localUser.jwt(0)
-      console.log('点击退出了')
       this.$router.push({ path: '/login' })
     }
   }

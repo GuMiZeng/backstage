@@ -11,7 +11,8 @@ const state = {
       Fid: 456,
       name: '经销商名'
     }
-  ] // 渠道账户
+  ], // 渠道账户
+  total: 0
 }
 
 const getters = {
@@ -21,6 +22,9 @@ const getters = {
 const mutations = {
   data (state, newVal) {
     state.data = newVal
+  },
+  total (state, newVal) {
+    state.total = newVal
   }
 }
 
@@ -41,6 +45,7 @@ const actions = {
     apiDealer.dealerData.get().then((_response) => {
       if (_response.data.code === 1) {
         commit('data', _response.data.data)
+        commit('total', _response.data.data.length)
       }
     })
   },
@@ -53,6 +58,7 @@ const actions = {
     apiDealer.searchData.get().then((_response) => {
       if (_response.data.code === 1) {
         commit('data', _response.data.data)
+        commit('total', _response.data.data.length)
       }
     })
   }

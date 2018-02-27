@@ -4,10 +4,7 @@
       <h3 slot="header" style="color:#2D8CF0">游戏记录</h3>
       <i-table :loading="c_loading" v-if="c_gameModal" :columns="d_columns_game" :data="c_gameData"></i-table>
       <br>
-      <Page v-if="d_page.total > 0 " :current="d_page.current" :total="d_page.total" :page-size="d_page.size" @on-change="pageSwitch($event)" @on-page-size-change="pageSizeSwitch($event)" show-total show-elevator show-sizer></Page>
-      <div slot="footer">
-        <i-button type="primary" @click="$store.state('player/gameModal', false)">确定</i-button>
-      </div>
+      <Page v-if="c_total > 0 " :current="d_page.current" :total="c_total" :page-size="d_page.size" @on-change="pageSwitch($event)" @on-page-size-change="pageSizeSwitch($event)" show-total show-sizer></Page>
     </Modal>
   </div>
 </template>
@@ -18,7 +15,6 @@ export default {
     return {
       d_page: {
         current: 1,
-        total: 1,
         size: 40
       },
       d_columns_game: [
@@ -53,6 +49,9 @@ export default {
   computed: {
     c_gameData () {
       return this.$store.state('playerGame/data')
+    },
+    c_total () {
+      return this.$store.state('playerGame/total')
     },
     c_player () {
       return this.$store.state('player/ID')// 点击详情的ID

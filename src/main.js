@@ -31,7 +31,7 @@ iviewApp.$Message.config({
 Axios.interceptors.response.use(
   _response => {
     console.log('%c █ url    = ' + _response.config.url, 'background: rgba(0, 128, 0, 0.1); color: green')
-    console.log('%c █ status = ' + _response.data.status, 'color: green')
+    console.log('%c █ code = ' + _response.data.code, 'color: green')
     console.log('%c █ data   =', 'color: green', _response.data.data)
     // 如果jwt无效 跳转登录界面
     if (_response.data.code === -10000) router.push({ path: '/login' })
