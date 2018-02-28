@@ -4,7 +4,7 @@
       <div class="logo no_drag">
         <tooltip content="瀑布竞技" placement="right">
           <icon type="coffee" size="24"></icon>
-          <span v-text="$store.state('user/uid')"></span>
+          <span v-text="c_uid"></span>
         </tooltip>
       </div>
       <div class="nav no_drag">
@@ -37,9 +37,9 @@ export default {
   },
   created () {
     // 权限控制运营页面显示
-    if (!this.$store.state('user/isAdmin')) {
+    if (!localUser.isAdmin()) {
       console.log('不是管理员')
-      console.log(this.$store.state('user/isAdmin'), this.$store.state('user/jwt'))
+      console.log(localUser.isAdmin(), localUser.uid())
       let tmp = this.$store.state('appMenu/list')
       let m = tmp.slice(0)
       if (m.length >= 3) {
@@ -49,7 +49,9 @@ export default {
     }
   },
   computed: {
-
+    c_uid () {
+      return localUser.uid()
+    }
   },
   methods: {
     reload () {

@@ -6,11 +6,18 @@ let namespace = 'user' // 本地存储命名空间
 let user = {}
 
 /**
- * 获取、设置 token 不进行本地存储
+ * 获取、设置 uid 本地存储
  */
-// user.token = (_str) => {
-//     return _str == null ? local.get(namespace + '_token') : local.set(namespace + '_token', _str, 60 * 60 * 24 * 1000)
-// }
+user.uid = (_str) => {
+  return _str == null ? local.get(namespace + '_uid') : local.set(namespace + '_uid', _str)
+}
+
+/**
+ * 获取、设置 isAdmin 本地存储
+ */
+user.isAdmin = (_str) => {
+  return _str == null ? local.get(namespace + '_isAdmin') : local.set(namespace + '_isAdmin', _str)
+}
 
 /**
  * 获取、设置 jwt

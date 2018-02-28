@@ -38,6 +38,7 @@ const actions = {
     tmp.type = _param.filter
     tmp.current = _param.current
     tmp.size = _param.size
+    tmp.uid = _param.uid
     apiCharge.chargeData.get().then((_response) => {
       if (_response.data.code === '1') {
         commit('chargeData', _response.data.data)

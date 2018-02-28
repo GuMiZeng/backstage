@@ -93,6 +93,8 @@ export default {
       this.getData()
     },
     getData () {
+      console.log(this.c_player, 'lll')
+      this.d_page.uid = this.c_player // 查看个人的财务记录
       this.$store.actions('playerCharge/upData', this.d_page)
     }
   },

@@ -5,7 +5,7 @@ import base64 from 'base64-url'
 const state = {
   uid: 0, // 账户id
   jwt: 0,
-  isAdmin: true
+  isAdmin: false
 }
 
 const getters = {
@@ -15,9 +15,11 @@ const getters = {
 const mutations = {
   uid (state, newVal) {
     state.uid = newVal
+    localUser.uid(newVal)
   },
   isAdmin (state, newVal) {
     state.isAdmin = newVal
+    localUser.isAdmin(newVal)
   },
   jwt (state, _str) {
     if (_str) { // 退出登录需要设置jwt为零

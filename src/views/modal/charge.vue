@@ -1,6 +1,6 @@
 <template>
     <Modal v-model="c_chargeModal" :closable='false' :mask-closable="false" :width="700">
-      <charge></charge>
+      <charge v-if="c_chargeModal"></charge>
       <div slot="footer">
         <i-button type="primary" @click="$store.state('player/chargeModal', false)">确定</i-button>
       </div>

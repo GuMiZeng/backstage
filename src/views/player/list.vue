@@ -111,7 +111,7 @@ export default {
                 on: {
                   click: () => {
                     this.$store.state('player/chargeModal', true)
-                    this.$store.state('player/ID', params.row.ID)
+                    this.$store.state('player/ID', params.row.account_num)
                   }
                 }
               }, `余额：${params.row.balance}`)
