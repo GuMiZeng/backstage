@@ -8,7 +8,7 @@ import operate from './operate' // 渠道
 const routes = [
   {
     path: '/',
-    redirect: '/player', // 重定向
+    redirect: '/login', // 重定向
     meta: {
       title: 'PuBu.me'
     },

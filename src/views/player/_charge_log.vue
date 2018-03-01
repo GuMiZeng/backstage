@@ -7,6 +7,7 @@
   </div>
 </template>
 <script>
+import { stamp2local } from '../../libs/function'
 export default {
   data () {
     return {
@@ -14,47 +15,62 @@ export default {
       d_page: {
         current: 1,
         size: 40,
-        filter: 4
+        filter: 'all'
       },
       d_columns_charge: [
         {
           title: '状态',
           key: 'state',
           render: (h, params) => {
-            if (params.row.state === null) return '— —'
+            if (!params.row.state) return '— —'
             if (params.row.state) return '成功'
             else return '失败'
           }
         },
         {
           title: '数量<点券>',
-          key: 'num'
+          key: 'trade_amount'
         },
         {
           title: '时间',
-          key: 'time'
+          key: 'created_at',
+          render: (h, params) => {
+            return stamp2local(params.row.created_at / 1000)
+          }
         },
         {
           title: '类型',
-          key: 'type',
+          key: 'order_type',
+          render: (h, params) => {
+            switch (params.row.order_type) {
+              case '0':
+                return '充值'
+              case '1':
+                return '奖励'
+              case '2':
+                return '转账'
+              case '3':
+                return '消费'
+            }
+          },
           filters: [
             {
               label: '充值',
-              value: 0
+              value: 'recharge'
             },
             {
               label: '转账',
-              value: 2
+              value: 'transfer'
             },
             {
               label: '消费',
-              value: 3
+              value: 'buy_chance'
             }
           ],
           filterMultiple: false,
           filterRemote (value, row) {
             if (!value.length) {
-              this.d_page.filter = 4
+              this.d_page.filter = 'all'
             } else {
               this.d_page.filter = value[0]
             }
@@ -93,7 +109,6 @@ export default {
       this.getData()
     },
     getData () {
-      console.log(this.c_player, 'lll')
       this.d_page.uid = this.c_player // 查看个人的财务记录
       this.$store.actions('playerCharge/upData', this.d_page)
     }

@@ -61,7 +61,7 @@ const actions = {
     apiPlayer.playerData.get().then((_response) => {
       if (_response.data.code === 1) {
         commit('data', _response.data.data)
-        commit('total', _response.data.data.length)
+        commit('total', _response.data.total)
       }
     })
   },

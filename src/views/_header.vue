@@ -60,6 +60,8 @@ export default {
     signOut () {
       // 清除jwt
       this.$store.state('user/jwt', 0)
+      this.$store.state('user/uid', 0)
+      this.$store.state('user/isAdmin', 0)
       localUser.jwt(0)
       this.$router.push({ path: '/login' })
     }

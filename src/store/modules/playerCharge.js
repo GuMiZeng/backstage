@@ -42,7 +42,7 @@ const actions = {
     apiCharge.chargeData.get().then((_response) => {
       if (_response.data.code === '1') {
         commit('chargeData', _response.data.data)
-        commit('total', _response.data.data.length)
+        commit('total', _response.data.total)
       }
     })
   }

@@ -106,7 +106,7 @@ export default {
 .login {
  width: 100vw;
  height: 100vh;
- background-image: url("https://file.iviewui.com/iview-admin/login_bg.jpg");
+ background-image: url("//file.iviewui.com/iview-admin/login_bg.jpg");
  background-size: cover;
  background-position: center;
  position: relative;
