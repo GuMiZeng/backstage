@@ -68,7 +68,6 @@ Axios.interceptors.response.use(
       case -1011:
         iviewApp.$Message.destroy()
         iviewApp.$Message.error('身份过期，请退出重新登录')
-        location.reload() // 刷新
         return _response
     }
     console.log('%c █ url    = ' + _response.config.url, 'background: rgba(0, 128, 0, 0.1); color: green')

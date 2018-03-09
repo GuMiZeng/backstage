@@ -8,11 +8,11 @@ let d = {}
  */
 
 d.config = {
-  baseURL: 'http://api.pubu.me:7001/api/',
-  headers: {
-    'jwt': localUser.jwt(),
-    'Content-Type': 'application/json'
-  }
+  // baseURL: 'http://api.pubu.me:7001/api/',
+  // headers: {
+  //   'jwt': localUser.jwt(),
+  //   'Content-Type': 'application/json'
+  // }
 }
 
 /**
@@ -24,11 +24,16 @@ d.config = {
 d.axios = function (_method, _path, _data) {
   return Axios.request({
     method: _method,
-    baseURL: this.config.baseURL,
+    // baseURL: this.config.baseURL,
     // url: `${_path}?${this.payload(_method, this.huobi.host, _path, this.huobi.body, this.huobi.secretKey)}`,
     url: _path,
     data: _data,
-    headers: this.config.headers
+    // headers: this.config.headers
+    baseURL: 'http://api.pubu.me:7001/api/',
+    headers: {
+      'jwt': localUser.jwt(),
+      'Content-Type': 'application/json'
+    }
   })
 }
 

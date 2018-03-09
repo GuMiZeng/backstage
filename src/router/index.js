@@ -56,9 +56,9 @@ router.beforeEach((to, from, next) => {
   store.state('appMenu/active', to.path) // 当前导航
   window.document.title = to.meta.title
   // 未登录，跳转登录
-  // if (!store.state('user/jwt') && to.path !== '/login') {
-  //   router.push('/login')
-  // }
+  if (!store.state('user/jwt') && to.path !== '/login') {
+    router.push('/login')
+  }
   next()
   // 禁止浏览器前进后退
   history.pushState(null, null, document.URL)

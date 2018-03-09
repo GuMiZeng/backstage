@@ -4,7 +4,7 @@ import router from '../../router'
 import base64 from 'base64-url'
 const state = {
   uid: 0, // 账户id
-  jwt: 0,
+  jwt: null,
   isAdmin: false
 }
 
@@ -43,7 +43,6 @@ const actions = {
     tmp.password = _value.password
     apiUser.login.post().then((_response) => {
       if (_response.data.code === 1) {
-        console.log(_response.data.data.uid, _response.data.data.isAdmin, 'llllllll')
         commit('uid', _response.data.data.uid)
         commit('isAdmin', _response.data.data.isAdmin)
         commit('jwt', _response.data.data.jwt) // 设置jwt
